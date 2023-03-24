@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
@@ -149,7 +150,7 @@ function PilihAlamat() {
         )}
         <Paper variant="outlined" sx={{ maxHeight: 200, overflow: 'auto' }}>
           <Card>
-            {hasilPencarianAlamat?.map((dtax) => {
+            {hasilPencarianAlamat?.map((dtax, index) => {
               const {
                 addressCode: addrCodeInCart,
                 receiverName,
@@ -166,7 +167,7 @@ function PilihAlamat() {
 
               return (
                 <>
-                  <CardContent>
+                  <CardContent key={index}>
                     <Grid
                       item
                       container

@@ -161,10 +161,11 @@ export default function MemberBV({ nextStep }) {
               onChange={handleOnChange}
             >
               {listBonusPeriod &&
-                listBonusPeriod.map((item) => {
+                listBonusPeriod.map((item, index) => {
                   const { value, text } = item;
                   return (
                     <FormControlLabel
+                      key={index}
                       value={value}
                       control={<Radio />}
                       label={text}
