@@ -1,0 +1,162 @@
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+nav .logo {
+  font-family: 'Bubblegum Sans', cursive;
+  font-size: large;
+  letter-spacing: 2px;
+}
+
+nav {
+  display: flex;
+  background-color: aquamarine;
+  justify-content: space-around;
+  height: 40px;
+  align-items: center;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  width: 40%;
+  justify-content: space-between;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: rgb(24, 97, 55);
+}
+
+nav ul li a:hover {
+  color: brown;
+}  
+
+/*Hamburger menu*/
+
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  height: 20px;
+  justify-content: space-between;
+  position: relative;
+}
+
+.menu-toggle input {
+  position: absolute;
+  width: 40px;
+  height: 28px;
+  opacity: 0;
+  top: -3px;
+  left: -5px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: blue;
+  border-radius: 3px;
+}
+
+/*Hamburger menu animation*/
+
+/*responsive breakpoint*/
+
+/*ukuran tablet*/
+@media screen and (max-width: 768px) {
+  nav ul {
+    width: 50%;
+  }
+}
+
+/*ukuran mobile*/
+@media screen and (max-width: 576px) {
+  nav ul {
+    display: none;
+  }
+}
+/*
+nav {
+  background: #af9090;
+}
+
+nav > ul {
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+
+nav::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+nav ul {
+  float: left;
+  list-style: none;
+  margin-right: 100px;
+  position: relative;
+}
+
+nav ul li {
+   float: left;
+   display: inline-block;
+   background: #1b1b1b;
+   margin: 0 5px;
+ }
+
+ nav ul li a {
+   color: white;
+   text-decoration: none;
+   line-height: 70px;
+   font-size: 18px;
+   padding: 8px 15px;
+ }
+
+ nav ul li a:hover {
+   color: cyan;
+   border-radius: 5px;
+   box-shadow: 0 0 5px #33ffff,
+               0 0 5px #66ffff;
+
+ } 
+
+ nav ul ul {
+   position: absolute;
+   opacity: 0;
+   top: 70px;
+   visibility: hidden;
+   transition: top .3s;
+ }
+
+ nav ul li:hover > ul {
+   top: 90px;
+   opacity: 1;
+   visibility: visible;
+ }
+
+ nav ul ul li {
+   position: relative;
+   margin: 0px;
+   width: 150px;
+   float: none;
+   display: list-item;
+   border-bottom: 1px solid rgba(0,0,0,0.3);
+ }
+
+ nav ul ul ul li {
+  position: relative;
+  top: -70px;
+  left: 150px;
+ } 
+ */
+ 

@@ -1,0 +1,39 @@
+{
+  "name": "learn-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@heroicons/react": "^1.0.6",
+    "@mui/icons-material": "^5.8.3",
+    "@mui/material": "^5.8.3",
+    "axios": "^0.21.4",
+    "classnames": "^2.3.1",
+    "js-cookie": "^3.0.1",
+    "next": "^12.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-query": "^3.39.2",
+    "react-scroll": "^1.8.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "check-prop-types": "^1.1.2",
+    "eslint": "^8.23.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.5",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^2.2.19"
+  }
+}
