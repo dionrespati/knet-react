@@ -1,0 +1,1 @@
+Belajar membuat aplikasi web menggunakan react JS dengan framework Next.js
