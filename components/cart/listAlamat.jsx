@@ -6,10 +6,10 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import PilihAlamat from './PilihAlamat';
-import PilihWarehouse from './PilihWarehouse';
-import PilihStockist from './PilihStockist';
-import PilihEkspedisi from './PilihEkspedisi';
+import PilihAlamat from './pilihAlamat';
+import PilihWarehouse from './pilihWarehouse';
+import PilihStockist from './pilihStockist';
+import PilihEkspedisi from './pilihEkspedisi';
 
 export default function ListAlamat() {
   console.log('listAlamat rendered');
