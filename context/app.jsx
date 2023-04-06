@@ -54,7 +54,7 @@ export function AppWrapper({ children }) {
     const newItem = { ...item, qty: 1 };
     const newArrData = [...data, newItem];
     const { priceCode } = cart;
-    const newArr = updateRekapTrans(newArrData, login, priceCode);
+    const newArr = updateRekapTrans(newArrData, login);
     setCart({
       ...cart,
       data: newArrData,

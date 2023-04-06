@@ -34,7 +34,21 @@ const setJsonResponse = (data) => {
 };
 
 const dateFormatName = (parameter) => {
-  const arrayBulan = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  const arrayBulan = [
+    '',
+    'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember',
+  ];
   const isi = parameter.split('-');
   const thn = isi[0];
   const bln = parseInt(isi[1]);
@@ -42,7 +56,7 @@ const dateFormatName = (parameter) => {
   return `${blnNama} ${thn}`;
 };
 
-const updateRekapTrans = (cart, login, priceCode) => {
+const updateRekapTrans = (cart, login, priceCode = '12W4') => {
   let totbv = 0;
   let totweight = 0;
   let totharga = 0;
@@ -86,12 +100,21 @@ function capitalizeFirstLetter(string) {
 
 function UppercaseFirst(mySentence) {
   const convertLower = mySentence.toLowerCase();
-  const finalSentence = convertLower.replace(/(^\w{1})|(\s+\w{1})/g, (letter) => letter.toUpperCase());
+  const finalSentence = convertLower.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+    letter.toUpperCase()
+  );
   return finalSentence;
 }
 
 export {
-  double, triple, currencyFormat, baseUrlApi, setJsonResponse,
-  dateFormatName, updateRekapTrans, capitalizeFirstLetter,
-  UppercaseFirst, falseResponse,
+  double,
+  triple,
+  currencyFormat,
+  baseUrlApi,
+  setJsonResponse,
+  dateFormatName,
+  updateRekapTrans,
+  capitalizeFirstLetter,
+  UppercaseFirst,
+  falseResponse,
 };

@@ -19,7 +19,7 @@ import { useAppContext } from '../../context/app';
 export default function AddReduceButton({ item, qty }) {
   console.log('komponen AddReduceButton rendered');
   const { cart, setCart, login } = useAppContext();
-  const { data: isiCart, priceCode } = cart;
+  const { data: isiCart } = cart;
 
   const updateCartQty = (itemPrd, value) => {
     if (value === 0) {
@@ -34,7 +34,7 @@ export default function AddReduceButton({ item, qty }) {
         i++;
       });
 
-      const newArr = updateRekapTrans(isiDataCart, login, priceCode);
+      const newArr = updateRekapTrans(isiDataCart, login);
       const newArrCart = {
         ...cart,
         data: isiDataCart,

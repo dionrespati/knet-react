@@ -143,7 +143,7 @@ function PilihAlamat() {
         {infoPilAlamat && (
           <Alert
             severity="success"
-            sx={{ height: '33px', padding: 0.5, marginBottom: 1 }}
+            sx={{ height: '39px', padding: 0.5, marginBottom: 1 }}
           >
             <AlertTitle>{infoPilAlamat}</AlertTitle>
           </Alert>
@@ -286,7 +286,7 @@ function PilihAlamat() {
                       {addressCode === addrCodeInCart && (
                         <Alert
                           severity="success"
-                          sx={{ height: '33px', padding: 0.5 }}
+                          sx={{ height: '39px', padding: 0.5 }}
                         >
                           <AlertTitle>
                             Alamat sudah dipilih&nbsp;&nbsp;&nbsp;

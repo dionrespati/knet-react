@@ -62,7 +62,6 @@ const PilihEkspedisi = () => {
         <Paper variant="outlined" sx={{ maxHeight: 200, overflow: 'auto' }}>
           <Card>
             {isCod === '0' &&
-              listKurir.length > 0 &&
               listKurir.listNonCod.map((kurir) => {
                 const {
                   courier,
