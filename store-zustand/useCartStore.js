@@ -7,7 +7,9 @@ const useCartStore = createStore((set) => ({
   totalWeight: 0.0,
   pricecode: '12W4',
   addToCart: (product) => {
-    const { qty, price_cw, price_ce, bv, weight } = product;
+    const { id, qty, price_cw, price_ce, bv, weight } = product;
+    const checkIfProductExist = state.items.find((item) => item.id === id);
+    if (checkIfProductExist) return false;
     set((state) => ({
       items: [...state.items, product],
       totalHarga:
@@ -20,6 +22,7 @@ const useCartStore = createStore((set) => ({
           : state.totalBv + qty * bv,
       totalWeight: state.totalWeight + qty * weight,
     }));
+    return true;
   },
   clearCart: () => {
     set(() => ({
