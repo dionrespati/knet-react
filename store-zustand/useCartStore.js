@@ -1,37 +1,61 @@
-import { createStore } from 'zustand';
+import { create } from 'zustand';
 
-const useCartStore = createStore((set) => ({
+const useCartStore = create((set, get) => ({
   items: [],
   totalHarga: 0,
   totalBv: 0,
   totalWeight: 0.0,
   pricecode: '12W4',
+  isCust: '0',
+
   addToCart: (product) => {
-    const { id, qty, price_cw, price_ce, bv, weight } = product;
-    const checkIfProductExist = state.items.find((item) => item.id === id);
-    if (checkIfProductExist) return false;
-    set((state) => ({
-      items: [...state.items, product],
-      totalHarga:
-        pricecode === '12W4'
-          ? state.totalPrice + qty * price_cw
-          : state.totalPrice + qty * price_ce,
-      totalBV:
-        pricecode === '12W4'
-          ? state.totalBv + qty * bv
-          : state.totalBv + qty * bv,
-      totalWeight: state.totalWeight + qty * weight,
-    }));
-    return true;
+    const { prdcd, qty, priceWestDist, priceEastDist, bv, weight } = product;
+    const existingItemIndex = get().items.findIndex(
+      (item) => item.prdcd === prdcd
+    );
+    if (existingItemIndex >= 0) {
+      const existingItem = get().items[existingItemIndex];
+      const updatedItem = {
+        ...existingItem,
+        qty: existingItem.qty + qty,
+      };
+      const newItems = [...get().items];
+      newItems[existingItemIndex] = updatedItem;
+      set((state) => ({
+        items: newItems,
+        ...get().calculateTotalHarga(newItems, state.pricecode, state.isCust),
+      }));
+    } else {
+      const newItem = { prdcd, qty, priceWestDist, priceEastDist, bv, weight };
+      set((state) => ({
+        items: [...state.items, newItem],
+        ...get().calculateTotalHarga(
+          [...state.items, newItem],
+          state.pricecode,
+          state.isCust
+        ),
+      }));
+    }
   },
-  clearCart: () => {
-    set(() => ({
-      items: [],
-      totalHarga: 0,
-      totalBv: 0,
-      totalWeight: 0.0,
-      pricecode: '12W4',
-    }));
+
+  calculateTotalHarga: (items, pricecode, isCust) => {
+    let totalHarga = 0;
+    let totalBv = 0;
+    let totalWeight = 0.0;
+    items.forEach((item) => {
+      if (pricecode === '12W4' && isCust === '0') {
+        totalHarga += item.qty * item.priceWestDist;
+      } else if (pricecode === '12W4' && isCust === '1') {
+        totalHarga += item.qty * item.priceWestCust;
+      } else if (pricecode === '12E4' && isCust === '0') {
+        totalHarga += item.qty * item.priceEastDist;
+      } else {
+        totalHarga += item.qty * item.priceEastCust;
+      }
+      totalBv += item.qty * item.bv;
+      totalWeight += item.qty * item.weight;
+    });
+    return { totalHarga, totalBv, totalWeight };
   },
 }));
 
