@@ -6,10 +6,13 @@ const useCartStore = create((set, get) => ({
   totalBv: 0,
   totalWeight: 0.0,
   pricecode: '12W4',
-  isCust: '0',
+  customerType: '0',
 
-  addToCart: (product) => {
-    const { prdcd, qty, priceWestDist, priceEastDist, bv, weight } = product;
+  setPriceCode: (newPriceCode) => set({ pricecode: newPriceCode }),
+  setCustomerType: (newCustomerType) => set({ customerType: newCustomerType }),
+
+  addToCart: (product, qty) => {
+    const { prdcd } = product;
     const existingItemIndex = get().items.findIndex(
       (item) => item.prdcd === prdcd
     );
@@ -23,27 +26,32 @@ const useCartStore = create((set, get) => ({
       newItems[existingItemIndex] = updatedItem;
       set((state) => ({
         items: newItems,
-        ...get().calculateTotalHarga(newItems, state.pricecode, state.isCust),
+        ...get().calculateTotalHarga(
+          newItems,
+          state.pricecode,
+          state.customerType
+        ),
       }));
     } else {
-      const newItem = { prdcd, qty, priceWestDist, priceEastDist, bv, weight };
+      let newItem = product;
+      newItem.qty = qty;
       set((state) => ({
         items: [...state.items, newItem],
         ...get().calculateTotalHarga(
           [...state.items, newItem],
           state.pricecode,
-          state.isCust
+          state.customerType
         ),
       }));
     }
   },
 
-  calculateTotalHarga: (items, pricecode, isCust) => {
+  calculateTotalHarga: (items, pricecode, customerType) => {
     let totalHarga = 0;
     let totalBv = 0;
     let totalWeight = 0.0;
     items.forEach((item) => {
-      if (pricecode === '12W4' && isCust === '0') {
+      if (pricecode === '12W4' && customerType === '0') {
         totalHarga += item.qty * item.priceWestDist;
       } else if (pricecode === '12W4' && isCust === '1') {
         totalHarga += item.qty * item.priceWestCust;

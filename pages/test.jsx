@@ -60,7 +60,7 @@ const products = [
 ];
 
 const Test = () => {
-  const { addToCart, items, totalHarga, totalBv } = useCartStore();
+  const { addToCart, items, totalHarga, totalBv, totalWeight } = useCartStore();
 
   console.log({ items, totalHarga, totalBv });
 
@@ -83,6 +83,7 @@ const Test = () => {
       </div>
       <div>Total Harga {totalHarga}</div>
       <div>Total BV {totalBv}</div>
+      <div>Total Weight {totalWeight}</div>
       <div>
         {items.map((item) => (
           <div key={item.prdcd}>
