@@ -1,10 +1,11 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 const useCartStore = create(
   persist(
     (set, get) => ({
       items: [],
+      totalItem: 0,
       totalHarga: 0,
       totalBv: 0,
       totalWeight: 0.0,
@@ -92,6 +93,15 @@ const useCartStore = create(
         }
       },
 
+      removeFromCart: (prdcd) => {
+        const index = get().items.findIndex((item) => item.prdcd === prdcd);
+        if (index !== -1) {
+          const newCartItems = [...get().items];
+          newCartItems.splice(index, 1);
+          set({ items: newCartItems });
+        }
+      },
+
       updateQtyItem: (prdcd, newQty) => {
         newQty = parseInt(newQty);
         const existingItemIndex = get().items.findIndex(
@@ -134,6 +144,7 @@ const useCartStore = create(
           items: [],
           totalHarga: 0,
           totalBv: 0,
+          totalItem: 0,
           totalWeight: 0.0,
         });
       },
@@ -141,6 +152,7 @@ const useCartStore = create(
       calculateTotalHarga: (items, pricecode, customerType) => {
         let totalHarga = 0;
         let totalBv = 0;
+        let totalItem = 0;
         let totalWeight = 0.0;
         items.forEach((item) => {
           if (pricecode === '12W4' && customerType === '0') {
@@ -154,15 +166,42 @@ const useCartStore = create(
           }
           totalBv += item.qty * item.bv;
           totalWeight += item.qty * item.weight;
+          totalItem += item.qty;
         });
-        return { totalHarga, totalBv, totalWeight };
+        return { totalHarga, totalBv, totalWeight, totalItem };
+      },
+
+      fetchCartStoreFromStorage: () => {
+        let cartStoreData;
+        if (typeof window !== 'undefined') {
+          cartStoreData = JSON.parse(sessionStorage.getItem('cart-store'));
+        }
+
+        if (
+          cartStoreData &&
+          cartStoreData.items !== undefined &&
+          cartStoreData.items.length > 0
+        ) {
+          set(() => ({
+            items: cartStoreData.items,
+            totalItem: parseInt(cartStoreData.totalItem),
+            totalHarga: parseInt(cartStoreData.totalHarga),
+            totalBv: parseInt(cartStoreData.totalBv),
+            totalWeight: parseFloat(cartStoreData.totalWeight).toFixed(2),
+            pricecode: cartStoreData.pricecode,
+            customerType: cartStoreData.customerType,
+          }));
+        }
       },
     }),
     {
       name: 'cart-store',
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
+
+// panggil fetchMemberInfoFromStorage saat pertama kali inisialisasi store
+useCartStore.getState().fetchCartStoreFromStorage();
 
 export default useCartStore;

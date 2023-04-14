@@ -19,14 +19,17 @@ import TextField from '@mui/material/TextField';
 import Axios from 'axios';
 import TitleForm from '../layout/titleForm';
 
-import { useAppContext } from '../../context/app';
+/* import { useAppContext } from '../../context/app'; */
 import { baseUrlApi, dateFormatName } from '../../custom/contoh';
 import getListBonusPeriod from '../../pages/api/bonusperiod';
+import useCartStore from '../../store-zustand/useCartStore';
+import useMemberInfo from '../../store-zustand/useMemberInfo';
 
 export default function MemberBV({ nextStep }) {
-  const { cart, setCart, login } = useAppContext();
   console.log('komponen memberBv rendered');
-  const { memberId, memberName, bonusPeriod } = cart;
+
+  const { items: cart } = useCartStore();
+  const { memberId, memberName, bonusPeriod } = useMemberInfo();
 
   const [listBonusPeriod, setListBonusPeriod] = useState([]);
 

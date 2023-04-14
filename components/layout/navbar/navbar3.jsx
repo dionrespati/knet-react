@@ -13,14 +13,22 @@ import Badge from '@mui/material/Badge';
 import Popover from '@mui/material/Popover';
 import Drawer from '@mui/material/Drawer';
 import PersonIcon from '@mui/icons-material/Person';
-import { useAppContext } from '../../../context/app';
+/* import { useAppContext } from '../../../context/app'; */
 import UserSettingList from './userSettingList';
 
 import PreviewCart from '../../cart/previewCart';
 
+import useCartStore from '../../../store-zustand/useCartStore';
+import useMemberInfo from '../../../store-zustand/useMemberInfo';
+
 function Navbar3() {
-  const { cart, login } = useAppContext();
-  const { data: isiCart, priceCode } = cart;
+  const { items: isiCart, totalItem, pricecode } = useCartStore();
+  const { userlogin, loginname } = useMemberInfo();
+
+  const login = {
+    userlogin,
+    loginname,
+  };
 
   const [anchorPopCart, setAnchorPopCart] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(false);
@@ -32,15 +40,12 @@ function Navbar3() {
   const handleClosePopCart = () => {
     setAnchorPopCart(null);
   };
-  const handleOpenNavMenu = () => {
-
-  };
+  const handleOpenNavMenu = () => {};
 
   const toggleDrawer = () => {
     setAnchorElUser(!anchorElUser);
   };
 
-  const totalItem = isiCart.length;
   const open = Boolean(anchorPopCart);
 
   return (
@@ -110,7 +115,7 @@ function Navbar3() {
               >
                 <PreviewCart
                   isiCart={isiCart}
-                  priceCode={priceCode}
+                  priceCode={pricecode}
                   login={login}
                 />
               </Popover>
@@ -120,16 +125,9 @@ function Navbar3() {
                 <PersonIcon />
               </IconButton>
             </Tooltip>
-            <Drawer
-              anchor="right"
-              open={anchorElUser}
-              onClose={toggleDrawer}
-            >
-              <UserSettingList
-                tutup={toggleDrawer}
-              />
+            <Drawer anchor="right" open={anchorElUser} onClose={toggleDrawer}>
+              <UserSettingList tutup={toggleDrawer} />
             </Drawer>
-
           </Box>
         </Toolbar>
       </AppBar>

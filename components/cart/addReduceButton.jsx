@@ -14,14 +14,17 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { updateRekapTrans } from '../../custom/contoh';
-import { useAppContext } from '../../context/app';
+/* import { useAppContext } from '../../context/app'; */
+
+import useCartStore from '../../store-zustand/useCartStore';
+import useMemberInfo from '../../store-zustand/useMemberInfo';
 
 export default function AddReduceButton({ item, qty }) {
   console.log('komponen AddReduceButton rendered');
-  const { cart, setCart, login } = useAppContext();
-  const { data: isiCart } = cart;
 
-  const updateCartQty = (itemPrd, value) => {
+  const { item: cart, updateQtyItem, removeFromCart } = useCartStore();
+
+  /* const updateCartQty = (itemPrd, value) => {
     if (value === 0) {
       alert('Minimal Qty adalah 1..');
     } else {
@@ -45,18 +48,22 @@ export default function AddReduceButton({ item, qty }) {
       };
       setCart(newArrCart);
     }
-  };
+  }; */
 
   const updateQty = (e, itemPrd) => {
     const { value } = e.target;
-    updateCartQty(itemPrd, value);
+    updateQtyItem(itemPrd, value);
   };
 
   const deleteItemCart = (itemPrd) => {
+    removeFromCart(itemPrd);
+  };
+
+  /* const deleteItemCart = (itemPrd) => {
     const { prdnm } = itemPrd;
     // alert(`Produk ${prdnm} akan dihapus..`);
     const newCart = isiCart.filter((el) => el.prdcd !== itemPrd.prdcd);
-    /* console.log({newCart}) */
+    
     const newArr = updateRekapTrans(newCart, login, priceCode);
     setCart({
       ...cart,
@@ -67,7 +74,7 @@ export default function AddReduceButton({ item, qty }) {
       totalWeight: newArr.totalWeight,
     });
     alert(`Produk ${prdnm} sudah hapus..`);
-  };
+  }; */
 
   return (
     <ButtonGroup
@@ -76,18 +83,18 @@ export default function AddReduceButton({ item, qty }) {
       color="success"
       variant="outlined"
     >
-      <Button onClick={() => updateCartQty(item, qty - 1)}>
+      <Button onClick={() => updateQtyItem(item.prdcd, qty - 1)}>
         <RemoveIcon sx={{ color: 'red' }} />
       </Button>
       <input
         type="text"
         name="changeQty"
         value={qty}
-        onChange={(event) => updateQty(event, item)}
+        onChange={(event) => updateQty(event, item.prdcd)}
         size="4"
         style={{ textAlign: 'center' }}
       />
-      <Button onClick={() => updateCartQty(item, qty + 1)}>
+      <Button onClick={() => updateQtyItem(item.prdcd, qty + 1)}>
         <AddIcon sx={{ color: 'green' }} />
       </Button>
       <Tooltip title="Lihat Detail" arrow>

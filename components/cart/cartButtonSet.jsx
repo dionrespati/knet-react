@@ -7,10 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import InfoIcon from '@mui/icons-material/Info';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useAppContext } from '../../context/app';
+/* import { useAppContext } from '../../context/app'; */
+import useCartStore from '../../store-zustand/useCartStore';
 
-export default function CartButtonSet({ item }) {
-  const { addToCart, login } = useAppContext();
+export default function CartButtonSet({ item, login }) {
+  const { addToCart } = useCartStore();
   return (
     <>
       {login !== null && (
@@ -35,7 +36,7 @@ export default function CartButtonSet({ item }) {
                 borderRadius: 1,
                 marginRight: 0.1,
               }}
-              onClick={() => addToCart(item)}
+              onClick={() => addToCart(item, 1)}
             >
               <AddShoppingCartIcon sx={{ color: 'white' }} />
             </IconButton>

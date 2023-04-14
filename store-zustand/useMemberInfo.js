@@ -1,49 +1,47 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 const useMemberInfo = create(
   persist(
     (set, get) => ({
-      userlogin: 'BLM ADA ID',
-      idmember: 'SAMA JUGA',
-      namamember: 'TESTING DION',
-      bonusperiod: '',
+      userlogin: 'IDSPAAA66834',
+      loginname: 'JHON DOE',
+      memberId: 'IDSPAAA66834',
+      memberName: 'JHON DOE',
+      bonusPeriod: '',
       tel_hp: '',
       email: '',
 
-      setuserLogin: (newUserLogin) => {
-        set({ userlogin: newUserLogin });
-      },
+      fetchMemberInfoFromStorage: () => {
+        let memberInfoData;
+        if (typeof window !== 'undefined') {
+          memberInfoData = JSON.parse(sessionStorage.getItem('member-info'));
+        }
 
-      setIdMember: (newIdMember) => {
-        set({ idmember: newIdMember });
-      },
-
-      setNamaMember: (newNamaMemokber) => {
-        set({ namamember: newNamaMember });
-      },
-
-      setBonusPeriod: (newBonusPeriod) => {
-        set({ bonusperiod: newBonusPeriod });
-      },
-
-      setuserLogin: (newUserLogin) => {
-        set({ userlogin: newUserLogin });
-      },
-
-      setTelpMember: (newtelpMember) => {
-        set({ tel_hp: newtelpMember });
-      },
-
-      setEmail: (newEmail) => {
-        set({ email: newEmail });
+        if (
+          memberInfoData &&
+          memberInfoData.items !== undefined &&
+          memberInfoData.items.length > 0
+        ) {
+          set(() => ({
+            userlogin: memberInfoData.userlogin,
+            idmember: memberInfoData.idmember,
+            namamember: memberInfoData.namamember,
+            bonusperiod: memberInfoData.bonusperiod,
+            tel_hp: memberInfoData.tel_hp,
+            email: memberInfoData.email,
+          }));
+        }
       },
     }),
     {
       name: 'member-info',
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
+
+// panggil fetchMemberInfoFromStorage saat pertama kali inisialisasi store
+useMemberInfo.getState().fetchMemberInfoFromStorage();
 
 export default useMemberInfo;

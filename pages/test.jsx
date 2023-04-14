@@ -70,6 +70,7 @@ const Test = () => {
     setPriceCode,
     pricecode,
     updateQtyItem,
+    totalItem,
   } = useCartStore();
 
   const handleQtyChange = (e) => {
@@ -77,7 +78,7 @@ const Test = () => {
     updateQtyItem(prdcd, newQty);
   };
 
-  console.log({ items, totalHarga, totalBv, pricecode });
+  console.log({ items, totalHarga, totalBv, totalItem, pricecode });
 
   return (
     <div>
@@ -138,10 +139,12 @@ const Test = () => {
           ))}
         </table>
       </div>
+      <div>Total Item {totalItem}</div>
       <div>Total Harga {totalHarga}</div>
       <div>Total BV {totalBv}</div>
       <div>Total Weight {totalWeight}</div>
       <div>Pricecode {pricecode}</div>
+
       <div>
         <button onClick={() => clearCart()}>Hapus Isi Cart</button>
         <button onClick={() => setPriceCode('12E4')}>Cek Wilayah B</button>

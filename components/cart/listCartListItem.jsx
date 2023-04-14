@@ -13,17 +13,28 @@ import Link from '@mui/material/Link';
 import { currencyFormat } from '../../custom/contoh';
 import TitleForm from '../layout/titleForm';
 
-import { useAppContext } from '../../context/app';
+/* import { useAppContext } from '../../context/app'; */
 import AddReduceButton from './addReduceButton';
 import MemberBV from './memberBV';
 import RekapTransaksi from './rekapTransaksi';
+import useCartStore from '../../store-zustand/useCartStore';
+import useMemberInfo from '../../store-zustand/useMemberInfo';
 
 export default function ListCartListItem({ setStep }) {
-  const { cart, login } = useAppContext();
-
   console.log('Halaman Cart List Item component invoked..');
 
-  const { data: isiCart, priceCode, totalBv, totalItem, totalWeight } = cart;
+  const {
+    items: isiCart,
+    pricecode,
+    totalBv,
+    totalItem,
+    totalWeight,
+  } = useCartStore();
+  const { userlogin, loginname } = useMemberInfo();
+  const login = {
+    userlogin,
+    loginname,
+  };
 
   const buttonStyle = { textTransform: 'capitalize', fontSize: '18px' };
 
@@ -65,19 +76,19 @@ export default function ListCartListItem({ setStep }) {
                   bv,
                   imageUrl,
                 } = item;
-                if (login !== null && priceCode === '12W4') {
+                if (login !== null && pricecode === '12W4') {
                   subTotal = qty * priceWestDist;
                 }
 
-                if (login !== null && priceCode === '12E4') {
+                if (login !== null && pricecode === '12E4') {
                   subTotal = qty * priceEastDist;
                 }
 
-                if (login === null && priceCode === '12W4') {
+                if (login === null && pricecode === '12W4') {
                   subTotal = qty * priceWestCust;
                 }
 
-                if (login === null && priceCode === '12E4') {
+                if (login === null && pricecode === '12E4') {
                   subTotal = qty * priceEastCust;
                 }
                 const subTotalBv = qty * bv;
