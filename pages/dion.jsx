@@ -1,105 +1,53 @@
-<<<<<<< HEAD
-import React, {useState, useEffect} from 'react'
-import {currencyFormat} from '../custom/contoh';
-import useCookies from '../custom/useCookies';
-
-
-const arrData = [
-  {
-    id: 1,
-    name: "Dion Respati",
-    age: 39,
-    salary: 4000000,
-    job_title: "Staff"
-  },
-  {
-    id: 2,
-    name: "Toto Widianto Adi",
-    age: 54,
-    salary: 10000000,
-    job_title: "Supervisor"
-  },
-  {
-    id: 3,
-    name: "Vera Yunita",
-    age: 30,
-    salary: 4000000,
-    job_title: "Staff"
-  },
-  {
-    id: 4,
-    name: "Fifin Amelia",
-    age: 35,
-    salary: 4000000,
-    job_title: "Staff"
-  },
-  {
-    id: 5,
-    name: "Roby Romadhany",
-    age: 35,
-    salary: 14000000,
-    job_title: "Manager"
-  }
-]
-
-
-const dion = () => {
-  //const [data, setData] = useState([]);
-   const [data, setData] = useCookies([]);
-
-  useEffect(() => {
-    const panggil = () => {
-      console.log("Panggil disini...");
-    }
-
-    setData(arrData);
-    panggil();
-  });
-  
-  console.log("awal...");
-  const nilai = currencyFormat(5200000);
-
-  const hasilx = arrData.filter((dta) => dta.age < 40);
-  return (
-    <>
-      <div>List Pegawai</div>
-      <div>Total : {arrData.length}</div>
-      {hasilx.map(dtax => {
-       const {id, name, job_title, age} = dtax;
-       return(
-         <div key={id}>
-            <p>ID : {id}</p>
-            <p>Nama : {name}</p>
-            <p>Jabatan : {job_title}</p>
-            <p>Umur : {age}</p>
-         </div>
-       ); 
-      })}
-      
-    </>
-  );
-}
-
-export default dion
-=======
-import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
+import { useEffect } from 'react';
+import useCartStore from '../store-zustand/useCartStore';
+import useMemberInfo from '../store-zustand/useMemberInfo';
 
 function Dion() {
+  const { items, totalHarga, totalBv, totalWeight } = useCartStore();
+  const { userlogin, idmember, namamember } = useMemberInfo();
+
+  useEffect(() => {
+    const cartStoreData = JSON.parse(localStorage.getItem('cart-store'));
+    if (
+      cartStoreData &&
+      cartStoreData.items !== undefined &&
+      cartStoreData.items.length > 0
+    ) {
+      setItems(cartStoreData.items);
+      setTotalHarga(cartStoreData.totalHarga);
+      setTotalBv(cartStoreData.totalBv);
+      setTotalWeight(cartStoreData.totalWeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    const memberInfoData = JSON.parse(localStorage.getItem('member-info'));
+    if (
+      memberInfoData &&
+      memberInfoData.items !== undefined &&
+      memberInfoData.items.length > 0
+    ) {
+      set(() => ({
+        userlogin: memberInfoData.userlogin,
+        idmember: memberInfoData.idmember,
+        namamember: memberInfoData.namamember,
+        bonusperiod: memberInfoData.bonusperiod,
+        tel_hp: memberInfoData.tel_hp,
+        email: memberInfoData.email,
+      }));
+    }
+  }, []);
+
+  // kode lainnya
+  console.log({ userlogin, idmember, namamember });
+
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <main>This app is using the dark mode</main>
-    </ThemeProvider>
+    <div>
+      <div>ID : {userlogin}</div>
+      <div>ID : {idmember}</div>
+      <div>ID : {namamember}</div>
+    </div>
   );
 }
 
 export default Dion;
->>>>>>> d397829 (Dev new context (#1))

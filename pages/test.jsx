@@ -60,9 +60,24 @@ const products = [
 ];
 
 const Test = () => {
-  const { addToCart, items, totalHarga, totalBv, totalWeight } = useCartStore();
+  const {
+    addToCart,
+    items,
+    totalHarga,
+    totalBv,
+    totalWeight,
+    clearCart,
+    setPriceCode,
+    pricecode,
+    updateQtyItem,
+  } = useCartStore();
 
-  console.log({ items, totalHarga, totalBv });
+  const handleQtyChange = (e) => {
+    const newQty = parseInt(e.target.value);
+    updateQtyItem(prdcd, newQty);
+  };
+
+  console.log({ items, totalHarga, totalBv, pricecode });
 
   return (
     <div>
@@ -71,7 +86,7 @@ const Test = () => {
           <div key={product.prdcd}>
             <h2>{product.prdnm}</h2>
             <img src={product.imageUrl} alt={product.prdnm} />
-            <p>BV: {product.bv}</p>
+            <td>BV: {product.bv}</td>
             <p>Price (West Dist): {product.priceWestDist}</p>
             {/* <p>Price (East Dist): {product.priceEastDist}</p>
             <p>Price (West Cust): {product.priceWestCust}</p>
@@ -81,19 +96,56 @@ const Test = () => {
           </div>
         ))}
       </div>
+      <div>
+        <table width="90%" border="1">
+          <tr>
+            <th>Kode</th>
+            <th>Nama</th>
+            <th>Qty</th>
+            <th>Harga</th>
+            <th>Sub Total Harga</th>
+            <th>Action</th>
+          </tr>
+
+          {items.map((item) => (
+            <tr key={item.prdcd}>
+              <td>{item.prdcd}</td>
+              <td>{item.prdnm}</td>
+              <td>
+                <button onClick={() => addToCart(item, -1)}>-</button>
+                <input
+                  type="text"
+                  value={item.qty}
+                  size="50px"
+                  onChange={(e) => updateQtyItem(item.prdcd, e.target.value)}
+                />
+                <button onClick={() => addToCart(item, 1)}>+</button>
+              </td>
+              <td>
+                {pricecode === '12W4' ? item.priceWestDist : item.priceEastDist}
+              </td>
+              <td>
+                {pricecode === '12W4'
+                  ? item.qty * item.priceWestDist
+                  : item.qty * item.priceEastDist}
+              </td>
+              <td>
+                <button onClick={() => addToCart(item, 5)}>
+                  Tambah 5 sekaligus
+                </button>
+              </td>
+            </tr>
+          ))}
+        </table>
+      </div>
       <div>Total Harga {totalHarga}</div>
       <div>Total BV {totalBv}</div>
       <div>Total Weight {totalWeight}</div>
+      <div>Pricecode {pricecode}</div>
       <div>
-        {items.map((item) => (
-          <div key={item.prdcd}>
-            <p>Product Code: {item.prdcd}</p>
-            <p>Quantity: {item.qty}</p>
-            <p>Harga: {item.priceWestDist}</p>
-            <p>BV: {item.bv}</p>
-            <p>Weight: {item.weight}</p>
-          </div>
-        ))}
+        <button onClick={() => clearCart()}>Hapus Isi Cart</button>
+        <button onClick={() => setPriceCode('12E4')}>Cek Wilayah B</button>
+        <button onClick={() => setPriceCode('12W4')}>Cek Wilayah A</button>
       </div>
     </div>
   );
