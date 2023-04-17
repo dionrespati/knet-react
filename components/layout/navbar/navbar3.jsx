@@ -23,6 +23,7 @@ import useMemberInfo from '../../../store-zustand/useMemberInfo';
 
 function Navbar3() {
   const { items: isiCart, totalItem, pricecode } = useCartStore();
+  console.log({ totalItem });
   const { userlogin, loginname } = useMemberInfo();
 
   const login = {

@@ -11,7 +11,11 @@ import ListCart from '../../components/cart/listCartListItem';
 import DeliveryOption from '../../components/cart/deliveryOption';
 import PaymentOption from '../../components/cart/paymentOption';
 
-const steps = ['Keranjang Belanja', 'Pilih Metode Pengiriman', 'Pilih Pembayaran'];
+const steps = [
+  'Keranjang Belanja',
+  'Pilih Metode Pengiriman',
+  'Pilih Pembayaran',
+];
 
 const index = () => {
   const [step, setStep] = useState(0);
@@ -24,7 +28,6 @@ const index = () => {
       sx={{
         p: 0.5,
         width: '100%',
-        backgroundColor: 'grey',
       }}
     >
       <Stepper activeStep={step} alternativeLabel>
@@ -36,23 +39,19 @@ const index = () => {
           </Step>
         ))}
       </Stepper>
-      <Grid container direction="row" columns={12} spacing={1} sx={{ marginTop: 4 }} justifyContent="space-evenly">
-        {step === 0 && (
-        <ListCart
-          setStep={setStep}
-        />
-        )}
+      <Grid
+        container
+        direction="row"
+        columns={12}
+        spacing={1}
+        sx={{ marginTop: 4 }}
+        justifyContent="space-evenly"
+      >
+        {step === 0 && <ListCart setStep={setStep} />}
 
-        {step === 1 && (
-        <DeliveryOption
-          step={step}
-          setStep={setStep}
-        />
-        )}
+        {step === 1 && <DeliveryOption step={step} setStep={setStep} />}
 
-        {step === 2 && (
-        <PaymentOption />
-        )}
+        {step === 2 && <PaymentOption />}
       </Grid>
     </Box>
   );

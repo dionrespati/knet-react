@@ -24,32 +24,6 @@ export default function AddReduceButton({ item, qty }) {
 
   const { item: cart, updateQtyItem, removeFromCart } = useCartStore();
 
-  /* const updateCartQty = (itemPrd, value) => {
-    if (value === 0) {
-      alert('Minimal Qty adalah 1..');
-    } else {
-      let i = 0;
-      const isiDataCart = isiCart;
-      isiDataCart.forEach((datax) => {
-        if (datax.prdcd === itemPrd.prdcd) {
-          isiDataCart[i].qty = parseInt(value);
-        }
-        i++;
-      });
-
-      const newArr = updateRekapTrans(isiDataCart, login);
-      const newArrCart = {
-        ...cart,
-        data: isiDataCart,
-        totalItem: newArr.totalItem,
-        totalHarga: newArr.totalHarga,
-        totalBv: newArr.totalBv,
-        totalWeight: newArr.totalWeight,
-      };
-      setCart(newArrCart);
-    }
-  }; */
-
   const updateQty = (e, itemPrd) => {
     const { value } = e.target;
     updateQtyItem(itemPrd, value);
@@ -58,23 +32,6 @@ export default function AddReduceButton({ item, qty }) {
   const deleteItemCart = (itemPrd) => {
     removeFromCart(itemPrd);
   };
-
-  /* const deleteItemCart = (itemPrd) => {
-    const { prdnm } = itemPrd;
-    // alert(`Produk ${prdnm} akan dihapus..`);
-    const newCart = isiCart.filter((el) => el.prdcd !== itemPrd.prdcd);
-    
-    const newArr = updateRekapTrans(newCart, login, priceCode);
-    setCart({
-      ...cart,
-      data: newCart,
-      totalItem: newArr.totalItem,
-      totalHarga: newArr.totalHarga,
-      totalBv: newArr.totalBv,
-      totalWeight: newArr.totalWeight,
-    });
-    alert(`Produk ${prdnm} sudah hapus..`);
-  }; */
 
   return (
     <ButtonGroup
@@ -103,7 +60,7 @@ export default function AddReduceButton({ item, qty }) {
         </Button>
       </Tooltip>
       <Tooltip title="Hapus dari keranjang" arrow>
-        <Button onClick={() => deleteItemCart(item)}>
+        <Button onClick={() => deleteItemCart(item.prdcd)}>
           <DeleteIcon color="error" />
         </Button>
       </Tooltip>

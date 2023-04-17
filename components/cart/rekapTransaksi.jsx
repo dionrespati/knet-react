@@ -60,7 +60,7 @@ export default function RekapTransaksi({
         <ListItem key="totWeight">
           <Typography {...subheadInfo}>Total Berat (Kg)</Typography>
           <Typography {...subheadValue} align="right">
-            {totalWeight}
+            {totalWeight.toFixed(2)}
           </Typography>
         </ListItem>
         <ListItem key="totOngkir">

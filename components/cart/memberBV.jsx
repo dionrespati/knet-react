@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable radix */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { func } from 'prop-types';
 
 import Tooltip from '@mui/material/Tooltip';
@@ -22,13 +22,12 @@ import TitleForm from '../layout/titleForm';
 /* import { useAppContext } from '../../context/app'; */
 import { baseUrlApi, dateFormatName } from '../../custom/contoh';
 import getListBonusPeriod from '../../pages/api/bonusperiod';
-import useCartStore from '../../store-zustand/useCartStore';
 import useMemberInfo from '../../store-zustand/useMemberInfo';
 
-export default function MemberBV({ nextStep }) {
+function MemberBV() {
   console.log('komponen memberBv rendered');
 
-  const { items: cart } = useCartStore();
+  /* const { items: cart } = useCartStore(); */
   const { memberId, memberName, bonusPeriod } = useMemberInfo();
 
   const [listBonusPeriod, setListBonusPeriod] = useState([]);
@@ -74,8 +73,8 @@ export default function MemberBV({ nextStep }) {
   }, []);
 
   const handleOnChange = (e) => {
-    const nilai = e.target.value.toUpperCase();
-    setCart({ ...cart, [e.target.name]: nilai });
+    /* const nilai = e.target.value.toUpperCase();
+    setCart({ ...cart, [e.target.name]: nilai }); */
   };
 
   const findNamaMember = () => {
@@ -179,17 +178,6 @@ export default function MemberBV({ nextStep }) {
             </RadioGroup>
           </FormControl>
         </ListItem>
-        <ListItem key="fieldMember4">
-          <Button
-            size="large"
-            variant="contained"
-            fullWidth
-            sx={buttonStyle}
-            onClick={nextStep}
-          >
-            Pilih Pengiriman
-          </Button>
-        </ListItem>
       </List>
     </Paper>
   );
@@ -202,3 +190,5 @@ MemberBV.propTypes = {
 MemberBV.defaultProps = {
   nextStep: () => {},
 };
+
+export default memo(MemberBV);
